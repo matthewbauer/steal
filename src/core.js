@@ -4,9 +4,9 @@ var cloneSteal = function(System){
 };
 
 var makeSteal = function(System){
-	
+
 	System.set('@loader', System.newModule({'default':System, __useDefault: true}));
-		
+
 	var configDeferred,
 		devDeferred,
 		appDeferred;
@@ -23,7 +23,7 @@ var makeSteal = function(System){
 					factory = arg;
 				}
 			});
-			
+
 			var modules = Promise.all(imports);
 			if(factory) {
 				return modules.then(function(modules) {
@@ -39,9 +39,11 @@ var makeSteal = function(System){
 			// wait until the config has loaded
 			return configDeferred.then(afterConfig,afterConfig);
 		}
-		
+
 	};
-	
+
+	System.set("@steal", System.newModule({"default":steal, __useDefault:true}));
+
 	steal.System = System;
 	steal.parseURI = parseURI;
 	steal.joinURIs = joinURIs;
